@@ -8,16 +8,12 @@ public class Student {
     private String surname;
     private double score;
 
-    // ===================== КОНСТРУКТОРЫ =====================
-
     public Student(int id, String name, String surname, double score) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.score = score;
     }
-
-    // ===================== ГЕТТЕРЫ / СЕТТЕРЫ =====================
 
     public int getId() {
         return id;
@@ -50,8 +46,6 @@ public class Student {
     public void setScore(double score) {
         this.score = score;
     }
-
-    // ===================== toString =====================
 
     @Override
     public String toString() {

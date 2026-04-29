@@ -1,5 +1,7 @@
 package com.example.studentapp.service;
 
+import com.example.studentapp.exception.DuplicateStudentException;
+import com.example.studentapp.exception.StudentNotFoundException;
 import com.example.studentapp.filter.StudentFilter;
 import com.example.studentapp.model.Student;
 
@@ -10,20 +12,27 @@ import java.util.stream.Collectors;
 public class StudentService {
 
 
+    public void addStudent(List<Student> students, Student newStudent) {
+        boolean exists = students.stream()
+                .anyMatch(s -> s.getId() == newStudent.getId());
+        if (exists) {
+            throw new DuplicateStudentException(newStudent.getId());
+        }
+        students.add(newStudent);
+    }
+
+    public void removeStudent(List<Student> students, int id) {
+        Student toRemove = students.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new StudentNotFoundException(id));
+        students.remove(toRemove);
+    }
+
     public List<Student> filterStudents(List<Student> students, StudentFilter filter) {
         return students.stream()
                 .filter(filter::test)
                 .collect(Collectors.toList());
-    }
-
-    public List<Student> filterByMinScore(List<Student> students, double minScore) {
-        return filterStudents(students, student -> student.getScore() >= minScore);
-    }
-
-
-    public List<Student> filterByName(List<Student> students, String namePart) {
-        return filterStudents(students,
-                student -> student.getName().toLowerCase().contains(namePart.toLowerCase()));
     }
 
     public List<Student> filterBySurname(List<Student> students, String surname) {
