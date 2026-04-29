@@ -1,9 +1,6 @@
 package com.example.studentapp.model;
 
-/**
- * Класс, представляющий студента.
- * Содержит основные поля: id, имя, фамилия и балл.
- */
+
 public class Student {
 
     private int id;
